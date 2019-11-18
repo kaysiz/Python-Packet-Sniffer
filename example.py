@@ -18,39 +18,39 @@ while True:
     
     conn, addr = s.accept()
     packet = conn.recvfrom(65565)
-    
+    #packet string from tuple
     packet = packet[0]
-    
-	# take the first 20 characters of the ip header
-	ip_header = packet[0:20]
 
-	# now upack them
-	iph = unpack('!BBHHHBBH4s4s', ip_header)
+    # take the first 20 characters of the ip header
+    ip_header = packet[0:20]
 
-	version_ihl = iph[0]
-	version = version_ihl >> 4
-	ihl = version_ihl &  0xF
+    # now upack them
+    iph = unpack('!BBHHHBBH4s4s', ip_header)
 
-	iph_length = ihl * 4
+    version_ihl = iph[0]
+    version = version_ihl >> 4
+    ihl = version_ihl &  0xF
 
-	ttl = iph[5]
-	protocol = iph[6]
-	s_addr = socket.inet_ntoa(iph[8]);
-	d_addr = socket.inet_ntoa(iph[9]);
+    iph_length = ihl * 4
 
-	print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
+    ttl = iph[5]
+    protocol = iph[6]
+    s_addr = socket.inet_ntoa(iph[8]);
+    d_addr = socket.inet_ntoa(iph[9]);
 
-	tcp_header = packet[iph_length:iph_length+20]
+    print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
 
-	#now unpack them :)
-	tcph = unpack('!HHLLBBHHH' , tcp_header)
+    tcp_header = packet[iph_length:iph_length+20]
 
-	source_port = tcph[0]
-	dest_port = tcph[1]
-	sequence = tcph[2]
-	acknowledgement = tcph[3]
-	doff_reserved = tcph[4]
-	tcph_length = doff_reserved >> 4
+    #now unpack them :)
+    tcph = unpack('!HHLLBBHHH' , tcp_header)
+
+    source_port = tcph[0]
+    dest_port = tcph[1]
+    sequence = tcph[2]
+    acknowledgement = tcph[3]
+    doff_reserved = tcph[4]
+    tcph_length = doff_reserved >> 4
     print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
     print('Source Port : ' + str(source_port) + ' Dest Port : ' + str(dest_port) + ' Sequence Number : ' + str(sequence) + ' Acknowledgement : ' + str(acknowledgement) + ' TCP header length : ' + str(tcph_length))
 
