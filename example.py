@@ -1,5 +1,6 @@
 import socket
 import sys
+import binascii
 
 host = ''
 port = 2055
