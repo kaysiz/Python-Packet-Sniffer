@@ -16,6 +16,6 @@ while True:
 
     conn, addr = s.accept()
     data = conn.recv(2048)
-    reply = 'Server output: '+ data.decode('utf-8')
+    reply = 'Server output: '+ binascii.hexlify(data)
     print(reply)
     print('connected to: ' +addr[0] + ':' + str(addr[1]))
