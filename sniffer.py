@@ -22,7 +22,7 @@ DATA_TAB_4 = '\t\t\t\t   '
 
 def main():
     pcap = Pcap('capture.pcap')
-    conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM, socket.ntohs(3))
+    conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     conn.bind(('127.0.0.1', 2055))
     conn.listen(5)
     while True:
