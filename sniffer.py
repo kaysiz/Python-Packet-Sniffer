@@ -70,10 +70,11 @@ def main():
             # Other IPv4
             else:
                 print(TAB_1 + 'Other IPv4 Data:')
-                print(format_multi_line(DATA_TAB_2, ipv4.data))
+                # print(format_multi_line(DATA_TAB_2, ipv4.data))
+                print(ipv4.data.decode())
 
         else:
-            print('Ethernet Data:')
+            print('Ethernet Dataffgf:')
             print(format_multi_line(DATA_TAB_1, eth.data))
 
     pcap.close()
