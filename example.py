@@ -12,7 +12,8 @@ except socket.error as e:
     print(str(e))
 
 s.listen(5)
+while True:
 
-conn, addr = s.accept()
+    conn, addr = s.accept()
 
-print('connected to: ' +addr[0] + ':' + str(addr[1]))
+    print('connected to: ' +addr[0] + ':' + str(addr[1]))
