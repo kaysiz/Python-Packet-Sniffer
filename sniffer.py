@@ -49,34 +49,24 @@ def main():
             # TCP
             elif ipv4.proto == 6:
                 tcp = TCP(ipv4.data)
-                print(TAB_1 + 'TCP Segment:')
-                print(TAB_2 + 'Source Port: {}, Destination Port: {}'.format(tcp.src_port, tcp.dest_port))
-                print(TAB_2 + 'Sequence: {}, Acknowledgment: {}'.format(tcp.sequence, tcp.acknowledgment))
-                print(TAB_2 + 'Flags:')
-                print(TAB_3 + 'URG: {}, ACK: {}, PSH: {}'.format(tcp.flag_urg, tcp.flag_ack, tcp.flag_psh))
-                print(TAB_3 + 'RST: {}, SYN: {}, FIN:{}'.format(tcp.flag_rst, tcp.flag_syn, tcp.flag_fin))
+                if tcp.dest_port == 2055:
+                    print(TAB_1 + 'TCP Segment:')
+                    print(TAB_2 + 'Source Port: {}, Destination Port: {}'.format(tcp.src_port, tcp.dest_port))
+                    print(TAB_2 + 'Sequence: {}, Acknowledgment: {}'.format(tcp.sequence, tcp.acknowledgment))
+                    print(TAB_2 + 'Flags:')
+                    print(TAB_3 + 'URG: {}, ACK: {}, PSH: {}'.format(tcp.flag_urg, tcp.flag_ack, tcp.flag_psh))
+                    print(TAB_3 + 'RST: {}, SYN: {}, FIN:{}'.format(tcp.flag_rst, tcp.flag_syn, tcp.flag_fin))
 
-                if len(tcp.data) > 0:
-
-                    # HTTP
-                    if tcp.src_port == 80 or tcp.dest_port == 80:
-                        print(TAB_2 + 'HTTP Data:')
-                        try:
-                            http = HTTP(tcp.data)
-                            http_info = str(http.data).split('\n')
-                            for line in http_info:
-                                print(DATA_TAB_3 + str(line))
-                        except:
-                            print(format_multi_line(DATA_TAB_3, tcp.data))
-                    else:
+                    if len(tcp.data) > 0:
                         print(TAB_2 + 'TCP Data:')
                         print(format_multi_line(DATA_TAB_3, tcp.data))
 
             # UDP
             elif ipv4.proto == 17:
                 udp = UDP(ipv4.data)
-                print(TAB_1 + 'UDP Segment:')
-                print(TAB_2 + 'Source Port: {}, Destination Port: {}, Length: {}'.format(udp.src_port, udp.dest_port, udp.size))
+                if udp.dest_port == 2055:
+                    print(TAB_1 + 'UDP Segment:')
+                    print(TAB_2 + 'Source Port: {}, Destination Port: {}, Length: {}'.format(udp.src_port, udp.dest_port, udp.size))
 
             # Other IPv4
             else:
