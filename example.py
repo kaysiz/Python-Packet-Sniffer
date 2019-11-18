@@ -17,8 +17,7 @@ s.listen(5)
 while True:
     conn, addr = s.accept()
 	packet = conn.recvfrom(65565)
-	#packet string from tuple
-	packet = packet[0]
+    packet = packet[0]
 
 	# take the first 20 characters of the ip header
 	ip_header = packet[0:20]
