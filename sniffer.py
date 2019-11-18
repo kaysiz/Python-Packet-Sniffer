@@ -37,7 +37,7 @@ def main():
             print(TAB_1 + 'IPv4 Packet:')
             print(TAB_2 + 'Version: {}, Header Length: {}, TTL: {},'.format(ipv4.version, ipv4.header_length, ipv4.ttl))
             print(TAB_2 + 'Protocol: {}, Source: {}, Target: {}'.format(ipv4.proto, ipv4.src, ipv4.target))
-
+            print("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeell{}".format(ipv4.proto))
             # ICMP
             if ipv4.proto == 1:
                 icmp = ICMP(ipv4.data)
