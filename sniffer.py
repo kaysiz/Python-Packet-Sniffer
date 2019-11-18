@@ -1,4 +1,5 @@
 import socket
+import binascii
 from general import *
 from networking.ethernet import Ethernet
 from networking.ipv4 import IPv4
@@ -71,7 +72,7 @@ def main():
             else:
                 print(TAB_1 + 'Other IPv4 Data:')
                 # print(format_multi_line(DATA_TAB_2, ipv4.data))
-                print(ipv4.data.decode())
+                print(binascii.hexlify(ipv4.data))
 
         else:
             print('Ethernet Dataffgf:')
