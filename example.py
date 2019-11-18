@@ -16,7 +16,9 @@ s.listen(5)
 while True:
 
     conn, addr = s.accept()
-    data = conn.recv(2048)
+    data = conn.recvfrom(65565)
+    packet = data[0]
     reply = 'Server output: '+ str(binascii.hexlify(data))
+     print('packet: ' + str(packet))
     print(reply)
     print('connected to: ' +addr[0] + ':' + str(addr[1]))
