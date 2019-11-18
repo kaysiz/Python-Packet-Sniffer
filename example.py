@@ -15,5 +15,7 @@ s.listen(5)
 while True:
 
     conn, addr = s.accept()
-
+    data = conn.recv(2048)
+    reply = 'Server output: '+ data.decode('utf-8')
+    print(reply)
     print('connected to: ' +addr[0] + ':' + str(addr[1]))
