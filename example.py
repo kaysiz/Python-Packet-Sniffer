@@ -18,7 +18,6 @@ while True:
 
     conn, addr = s.accept()
 	packet = s.recvfrom(65565)
-
 	#packet string from tuple
 	packet = packet[0]
 
