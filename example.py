@@ -116,9 +116,8 @@ def store_template_flowset(data):
     offset = 20
     
     template_flowset_header = unpack('!HHHH', data[offset:offset+8])
-    for x in template_flowset_header:
-        print("Some sanity   " + str(x))
     template_flowset_id = template_flowset_header[0]
+    print("Flowset id   " + str(template_flowset_id))
     template_flowset_length = template_flowset_header[1]
     template_flowset_template_id = template_flowset_header[2]
     template_flowset_field_count = template_flowset_header[3]
