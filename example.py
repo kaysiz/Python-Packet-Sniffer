@@ -1,16 +1,15 @@
 import socket
 import sys
 import binascii
-from struct import unpack, calcsize
-
-# from netflow import parse_packet, TemplateNotRecognized, UnknownNetFlowVersion
+from struct import unpack
+from netflow.v9 import V9ExportPacket, TemplateNotRecognized
 
 class Flow(object):
 	# Virtual base class
 	LENGTH = 0
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError("Short flow")
+			raise ValueError, "Short flow"
 
 	def _int_to_ipv4(self, addr):
 		return "%d.%d.%d.%d" % \
@@ -22,15 +21,15 @@ class Header(object):
 	LENGTH = 0
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError("Short flow header")
+			raise ValueError, "Short flow header"
 
 class Header1(Header):
-	LENGTH = calcsize("!HHIII")
+	LENGTH = struct.calcsize("!HHIII")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError("Short flow header")
+			raise ValueError, "Short flow header"
 			
-		_nh = unpack("!HHIII", data)
+		_nh = struct.unpack("!HHIII", data)
 		self.version = _nh[0]
 		self.num_flows = _nh[1]
 		self.sys_uptime = _nh[2]
@@ -47,12 +46,12 @@ class Header1(Header):
 		return ret
 
 class Flow1(Flow):
-	LENGTH = calcsize("!IIIHHIIIIHHHBBBBBBI")
+	LENGTH = struct.calcsize("!IIIHHIIIIHHHBBBBBBI")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError("Short flow")
+			raise ValueError, "Short flow"
 			
-		_ff = unpack("!IIIHHIIIIHHHBBBBBBI", data)
+		_ff = struct.unpack("!IIIHHIIIIHHHBBBBBBI", data)
 		self.src_addr = self._int_to_ipv4(_ff[0])
 		self.dst_addr = self._int_to_ipv4(_ff[1])
 		self.next_hop = self._int_to_ipv4(_ff[2])
@@ -77,97 +76,40 @@ class Flow1(Flow):
 
 class NetFlowPacket:
 	FLOW_TYPES = {
-		9 : (Header1, Flow1),
-        # 9 : (Header9, Flow9),
+		1 : (Header1, Flow1),
 	}
 	def __init__(self, data):
 		if len(data) < 16:
 			raise ValueError("Short packet")
-		_nf = unpack("!H", data[:2])
+		_nf = struct.unpack("!H", data[:2])
 		self.version = _nf[0]
-        # print(unpack("!H", data[:2])[0])
-		# if not self.version in self.FLOW_TYPES.keys():
-		# 	raise RuntimeWarning("NetFlow version %d is not yet implemented" % self.version)
-        template = {}
-        # try:
-        #     export = parse_packet(data, templates)
-        # except UnknownNetFlowVersion as e:
-        #     logger.error("%s, ignoring the packet", e)
-        #     # continue
-        # except TemplateNotRecognized:
-        #     logger.debug("Failed to decode a v9 ExportPacket - will "
-        #                     "re-attempt when a new template is discovered")
-        #     # continue
 
-        # logger.debug("Processed a v%d ExportPacket with %d flows.",
-        #                      export.header.version, export.header.count)
-	# 	hdr_class = self.FLOW_TYPES[self.version][0]
-	# 	flow_class = self.FLOW_TYPES[self.version][1]
+		if not self.version in self.FLOW_TYPES.keys():
+			raise RuntimeWarning("NetFlow version %d is not yet implemented" % self.version)
+		hdr_class = self.FLOW_TYPES[self.version][0]
+		flow_class = self.FLOW_TYPES[self.version][1]
 
-	# 	self.hdr = hdr_class(data[:hdr_class.LENGTH])
+		self.hdr = hdr_class(data[:hdr_class.LENGTH])
 
-	# 	if len(data) - self.hdr.LENGTH != \
-	# 	   (self.hdr.num_flows * flow_class.LENGTH):
-	# 		raise ValueError("Packet truncated in flow data")
+		if len(data) - self.hdr.LENGTH != \
+		   (self.hdr.num_flows * flow_class.LENGTH):
+			raise ValueError("Packet truncated in flow data")
 		
-	# 	self.flows = []
-	# 	for n in range(self.hdr.num_flows):
-	# 		offset = self.hdr.LENGTH + (flow_class.LENGTH * n)
-	# 		flow_data = data[offset:offset + flow_class.LENGTH]
-	# 		self.flows.append(flow_class(flow_data))
+		self.flows = []
+		for n in range(self.hdr.num_flows):
+			offset = self.hdr.LENGTH + (flow_class.LENGTH * n)
+			flow_data = data[offset:offset + flow_class.LENGTH]
+			self.flows.append(flow_class(flow_data))
 
-	# def __str__(self):
-	# 	ret = str(self.hdr)
-	# 	i = 0
-	# 	for flow in self.flows:
-	# 		ret += "Flow %d: " % i
-	# 		ret += "%s\n" % str(flow)
-	# 		i += 1
+	def __str__(self):
+		ret = str(self.hdr)
+		i = 0
+		for flow in self.flows:
+			ret += "Flow %d: " % i
+			ret += "%s\n" % str(flow)
+			i += 1
 
-	# 	return ret
-
-
-
-
-# def run(self):
-#         # Process packets from the queue
-#         try:
-#             templates = {}
-#             to_retry = []
-#             while not self._shutdown.is_set():
-
-#                 try:
-#                     export = parse_packet(pkt.data, templates)
-#                 except UnknownNetFlowVersion as e:
-#                     logger.error("%s, ignoring the packet", e)
-#                     continue
-#                 except TemplateNotRecognized:
-#                     if time.time() - pkt.ts > PACKET_TIMEOUT:
-#                         logger.warning("Dropping an old and undecodable v9 ExportPacket")
-#                     else:
-#                         to_retry.append(pkt)
-#                         logger.debug("Failed to decode a v9 ExportPacket - will "
-#                                      "re-attempt when a new template is discovered")
-#                     continue
-
-#                 logger.debug("Processed a v%d ExportPacket with %d flows.",
-#                              export.header.version, export.header.count)
-
-#                 # If any new templates were discovered, dump the unprocessable
-#                 # data back into the queue and try to decode them again
-#                 if export.header.version == 9 and export.contains_new_templates and to_retry:
-#                     logger.debug("Received new template(s)")
-#                     logger.debug("Will re-attempt to decode %d old v9 ExportPackets",
-#                                  len(to_retry))
-#                     for p in to_retry:
-#                         self.input.put(p)
-#                     to_retry.clear()
-
-#                 self.output.put((pkt.ts, pkt.client, export))
-#         finally:
-#             self.server.shutdown()
-#             self.server.server_close()
-
+		return ret
 
 
 
@@ -186,8 +128,9 @@ while True:
     
     conn, addr = s.accept()
     packet, data = conn.recvfrom(65565)
-    print(unpack("!H", packet[:2])[0])
-    # NetFlowPacket(packet)
+    if unpack("!H", packet[:2])[0] == 9:
+        return V9ExportPacket(data, templates)
+    print("blows up")
     # print(packet)
     # print(packet[:2][0])
     #packet string from tuple
