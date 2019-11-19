@@ -109,23 +109,21 @@ class NetFlowPacket:
 
 		return ret
 
-host = '127.0.0.1'
+host = ''
 port = 2055
 
-addrs = socket.getaddrinfo(host, port, socket.AF_UNSPEC, 
-    socket.SOCK_DGRAM, 0, socket.AI_PASSIVE)
-socks = []
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-# for addr in addrs:
-	
-# 	socks.append(sock)
+try:
+    s.bind((host, port))
+except socket.error as e:
+    print(str(e))
 
-print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
-sock = socket.socket(addr[0], addr[1])
-sock.bind(addr[4])
+s.listen(5)
 while True:
-    conn, addr = sock.accept()
-    data, addrport = sock.recvfrom(8192)
+    
+    conn, addr = s.accept()
+    data, addrport = s.recvfrom(8192)
     print("Received flow packet from %s:%d" % addrport)
     print(NetFlowPacket(data))
         
