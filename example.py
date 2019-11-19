@@ -1,7 +1,7 @@
 import socket
 import sys
 import binascii
-from struct import unpack
+from struct import unpack, calcsize
 from netflow.v9 import V9ExportPacket, TemplateNotRecognized
 
 class Flow(object):
@@ -24,12 +24,12 @@ class Header(object):
 			raise ValueError("Short flow header")
 
 class Header1(Header):
-	LENGTH = struct.calcsize("!HHIII")
+	LENGTH = calcsize("!HHIII")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
 			raise ValueError("Short flow header")
 			
-		_nh = struct.unpack("!HHIII", data)
+		_nh = unpack("!HHIII", data)
 		self.version = _nh[0]
 		self.num_flows = _nh[1]
 		self.sys_uptime = _nh[2]
@@ -46,12 +46,12 @@ class Header1(Header):
 		return ret
 
 class Flow1(Flow):
-	LENGTH = struct.calcsize("!IIIHHIIIIHHHBBBBBBI")
+	LENGTH = calcsize("!IIIHHIIIIHHHBBBBBBI")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
 			raise ValueError("Short flow")
 			
-		_ff = struct.unpack("!IIIHHIIIIHHHBBBBBBI", data)
+		_ff = unpack("!IIIHHIIIIHHHBBBBBBI", data)
 		self.src_addr = self._int_to_ipv4(_ff[0])
 		self.dst_addr = self._int_to_ipv4(_ff[1])
 		self.next_hop = self._int_to_ipv4(_ff[2])
@@ -81,7 +81,7 @@ class NetFlowPacket:
 	def __init__(self, data):
 		if len(data) < 16:
 			raise ValueError("Short packet")
-		_nf = struct.unpack("!H", data[:2])
+		_nf = unpack("!H", data[:2])
 		self.version = _nf[0]
 
 		if not self.version in self.FLOW_TYPES.keys():
