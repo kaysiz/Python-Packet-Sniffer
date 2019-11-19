@@ -112,6 +112,9 @@ class NetFlowPacket:
 		return ret
 
 def store_template_flowset(data):
+    
+    offset = 20
+    
     template_flowset_header = unpack('!HHHH', data[offset:offset+8])
     template_flowset_id = template_flowset_header[0]
     template_flowset_length = template_flowset_header[1]
