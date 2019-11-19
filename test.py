@@ -116,9 +116,9 @@ addrs = socket.getaddrinfo(host, port, socket.AF_UNSPEC,
     socket.SOCK_DGRAM, 0, socket.AI_PASSIVE)
 socks = []
 
-for addr in addrs:
+# for addr in addrs:
 	
-	socks.append(sock)
+# 	socks.append(sock)
 
 	print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
 sock = socket.socket(addr[0], addr[1])
