@@ -181,7 +181,7 @@ class DataFlowSet:
     def __init__(self, data, templates):
         pack = struct.unpack('!HH', data[:4])
         for x in pack:
-            print("shit " + x)
+            print("shit " + str(x))
         self.template_id = pack[0]  # flowset_id is reference to a template_id
         print("erroring id : " + str(self.template_id))
         self.length = pack[1]
