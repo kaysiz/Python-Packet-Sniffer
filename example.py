@@ -85,7 +85,7 @@ class NetFlowPacket:
 			raise ValueError("Short packet")
 		_nf = unpack("!H", data[:2])
 		self.version = _nf[0]
-        print(self.version)
+        print(version)
 		# if not self.version in self.FLOW_TYPES.keys():
 		# 	raise RuntimeWarning("NetFlow version %d is not yet implemented" % self.version)
         template = {}
