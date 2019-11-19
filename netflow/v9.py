@@ -13,9 +13,8 @@ Copyright 2017, 2018 Dominik Pataky <dev@bitkeks.eu>
 Licensed under MIT License. See LICENSE.
 """
 
-import ipaddress
 import struct
-
+import ipaddress
 
 FIELD_TYPES = {
     0: 'UNKNOWN_FIELD_TYPE',  # fallback for unknown field types
