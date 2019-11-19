@@ -287,7 +287,7 @@ class TemplateFlowSet:
             # template = TemplateRecord(template_id, field_count, fields)
 
             # Append the new template to the global templates list
-            self.templates[template.template_id] = template
+            # self.templates[template.template_id] = template
 
             # Set offset to next template_id field
             offset += 4
