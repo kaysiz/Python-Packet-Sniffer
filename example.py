@@ -19,7 +19,7 @@ while True:
     conn, addr = s.accept()
     packet = conn.recvfrom(65565)
     # print(packet)
-    print(struct.unpack('!H', packet[:2])[0])
+    print(unpack('!H', packet[:2])[0])
     #packet string from tuple
     packet = packet[0]
 
