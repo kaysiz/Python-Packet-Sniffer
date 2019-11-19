@@ -93,7 +93,7 @@ class NetFlowPacket:
             export = parse_packet(data, templates)
         except UnknownNetFlowVersion as e:
             logger.error("%s, ignoring the packet", e)
-            continue
+            # continue
         except TemplateNotRecognized:
             logger.debug("Failed to decode a v9 ExportPacket - will "
                             "re-attempt when a new template is discovered")
