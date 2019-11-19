@@ -26,7 +26,7 @@ while True:
 
     # now upack them
     iph = unpack('!BBHHHBBH4s4s', ip_header)
-    print(unpack('!H', ip_header)
+    print(unpack('!H', ip_header))
 
     version_ihl = iph[0]
     version = version_ihl >> 4
