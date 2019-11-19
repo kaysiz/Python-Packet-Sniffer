@@ -127,7 +127,7 @@ def store_template_flowset(data):
     i = 0
     for template_redord in range(template_flowset_field_count):
         # get all the fields in this template flowset
-        template_field_type, template_field_length = struct.unpack('!HH', data[offset:offset+4])
+        template_field_type, template_field_length = unpack('!HH', data[offset:offset+4])
         # create a dictionary for 
         template_fields_type_length[(template_flowset_template_id, template_redord)] = (template_field_type, template_field_length)
         offset += 4
