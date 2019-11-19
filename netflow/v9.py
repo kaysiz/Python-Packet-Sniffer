@@ -201,6 +201,7 @@ class DataFlowSet:
             new_record = DataRecord()
 
             for field in template.fields:
+                print(str(field))
                 flen = field.field_length
                 fkey = FIELD_TYPES[field.field_type]
 
