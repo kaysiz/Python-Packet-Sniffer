@@ -152,8 +152,8 @@ while True:
     print(store_template_flowset(packet))
     print(unpack("!H", packet[:2])[0])
     
-    # if unpack("!H", packet[:2])[0] == 9:
-    #     print(V9ExportPacket(packet, templates))
+    if unpack("!H", packet[:2])[0] == 9:
+        print(V9ExportPacket(packet, templates))
     # print("blows up")
     # print(packet)
     # print(packet[:2][0])
