@@ -626,9 +626,9 @@ if __name__ == '__main__':
     if args.port < 1 or args.port > 65535:
         ap.exit(-1, "error: port must be 1-65535")
 
-    verbose = args.verbose
-    if args.quiet:
-        verbose = 0
+    # verbose = args.verbose
+    # if args.quiet:
+    #     verbose = 0
 
     #if args.daemonize:
     #    if args.pidfile is None:
