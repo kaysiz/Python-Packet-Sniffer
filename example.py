@@ -77,8 +77,8 @@ class Flow1(Flow):
 
 class NetFlowPacket:
 	FLOW_TYPES = {
-		1 : (Header1, Flow1),
-        9 : (Header9, Flow9),
+		9 : (Header1, Flow1),
+        # 9 : (Header9, Flow9),
 	}
 	def __init__(self, data):
 		if len(data) < 16:
