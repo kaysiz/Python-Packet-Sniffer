@@ -97,7 +97,7 @@ class NetFlowPacket:
         except TemplateNotRecognized:
             logger.debug("Failed to decode a v9 ExportPacket - will "
                             "re-attempt when a new template is discovered")
-            continue
+            # continue
 
         logger.debug("Processed a v%d ExportPacket with %d flows.",
                              export.header.version, export.header.count)
