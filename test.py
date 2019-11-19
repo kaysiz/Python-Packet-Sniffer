@@ -124,7 +124,7 @@ for addr in addrs:
 	print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
 
 while True:
-	(rlist, wlist, xlist) = select.select(socks, [], socks)
+    (rlist, wlist, xlist) = select.select(socks, [], socks)
     print("test")
 	for sock in rlist:
 		(data, addrport) = sock.recvfrom(8192)
