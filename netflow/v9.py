@@ -333,7 +333,9 @@ class V9ExportPacket:
                 # Check for any new/changed templates
                 if not self._new_templates:
                     for id_, template in tfs.templates.items():
+                        print("we found an Id")
                         if id_ not in self.templates or self.templates[id_] != template:
+                            print("new template")
                             self._new_templates = True
                             break
                 self.templates.update(tfs.templates)
