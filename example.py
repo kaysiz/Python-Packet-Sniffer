@@ -85,22 +85,22 @@ class NetFlowPacket:
 			raise ValueError("Short packet")
 		_nf = unpack("!H", data[:2])
 		self.version = _nf[0]
-
-		if not self.version in self.FLOW_TYPES.keys():
-			raise RuntimeWarning("NetFlow version %d is not yet implemented" % self.version)
+        print(self.version)
+		# if not self.version in self.FLOW_TYPES.keys():
+		# 	raise RuntimeWarning("NetFlow version %d is not yet implemented" % self.version)
         template = {}
-        try:
-            export = parse_packet(data, templates)
-        except UnknownNetFlowVersion as e:
-            logger.error("%s, ignoring the packet", e)
-            # continue
-        except TemplateNotRecognized:
-            logger.debug("Failed to decode a v9 ExportPacket - will "
-                            "re-attempt when a new template is discovered")
-            # continue
+        # try:
+        #     export = parse_packet(data, templates)
+        # except UnknownNetFlowVersion as e:
+        #     logger.error("%s, ignoring the packet", e)
+        #     # continue
+        # except TemplateNotRecognized:
+        #     logger.debug("Failed to decode a v9 ExportPacket - will "
+        #                     "re-attempt when a new template is discovered")
+        #     # continue
 
-        logger.debug("Processed a v%d ExportPacket with %d flows.",
-                             export.header.version, export.header.count)
+        # logger.debug("Processed a v%d ExportPacket with %d flows.",
+        #                      export.header.version, export.header.count)
 	# 	hdr_class = self.FLOW_TYPES[self.version][0]
 	# 	flow_class = self.FLOW_TYPES[self.version][1]
 
