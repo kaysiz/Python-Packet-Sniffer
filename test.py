@@ -117,14 +117,15 @@ addrs = socket.getaddrinfo(host, port, socket.AF_UNSPEC,
 socks = []
 
 for addr in addrs:
-	sock = socket.socket(addr[0], addr[1])
-	sock.bind(addr[4])
+	
 	socks.append(sock)
 
 	print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
-
+sock = socket.socket(addr[0], addr[1])
+sock.bind(addr[4])
 while True:
-    data, addrport = socks[0].recvfrom(8192)
+    conn, addr = sock.accept()
+    data, addrport = sock.recvfrom(8192)
     print("Received flow packet from %s:%d" % addrport)
     print(NetFlowPacket(data))
         
