@@ -590,14 +590,14 @@ def main(args):
     #     exit(-1)
     # db.start()
 
-    async def wait(db_shutdown):
-        try:
-            while not db_shutdown.is_set():
-                await asyncio.sleep(0.25)
-                log_msg("- waiting", msg_verb=3)
-        except KeyboardInterrupt:
-            log_msg("Reached end of wait()", msg_verb=3)
-    wait_task = loop.create_task(wait(db_shutdown))
+    # async def wait(db_shutdown):
+    #     try:
+    #         while not db_shutdown.is_set():
+    #             await asyncio.sleep(0.25)
+    #             log_msg("- waiting", msg_verb=3)
+    #     except KeyboardInterrupt:
+    #         log_msg("Reached end of wait()", msg_verb=3)
+    # wait_task = loop.create_task(wait(db_shutdown))
     try:
         loop.run_forever()
     except KeyboardInterrupt:
