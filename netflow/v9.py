@@ -184,6 +184,7 @@ class DataFlowSet:
         self.template_id = pack[0]  # flowset_id is reference to a template_id
         print("erroring id : " + str(self.template_id))
         self.length = pack[1]
+        print("length : " + str(self.length))
         self.flows = []
 
         offset = 4
