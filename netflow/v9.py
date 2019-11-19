@@ -282,6 +282,7 @@ class TemplateFlowSet:
                 if field_type not in FIELD_TYPES:
                     field_type = 0  # Set field_type to UNKNOWN_FIELD_TYPE as fallback
                 field = TemplateField(field_type, field_length)
+                print("field is " + str(field))
                 fields.append(field)
 
             # Create a template object with all collected data
@@ -324,16 +325,14 @@ class V9ExportPacket:
         self.flows = []
 
         offset = self.header.length
-        print("Offset    " + str(len(data)))
         while offset != len(data):
             flowset_id = struct.unpack('!H', data[offset:offset+2])[0]
-            print("hellow there    " + str(flowset_id))
             if flowset_id == 0:  # TemplateFlowSet always have id 0
                 tfs = TemplateFlowSet(data[offset:])
                 # Check for any new/changed templates
                 if not self._new_templates:
                     for id_, template in tfs.templates.items():
-                        print("we found an Id")
+                        print("we found an Id: " + str())
                         if id_ not in self.templates or self.templates[id_] != template:
                             print("new template")
                             self._new_templates = True
