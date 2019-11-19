@@ -183,7 +183,7 @@ class DataFlowSet:
         offset = 20
         print("These are the templates:    " + str(templates.keys()))
         template_flowset_header = struct.unpack('!HHHH', data[offset:offset+8])
-        self.template_id = template_flowset_header[2]  # flowset_id is reference to a template_id
+        self.template_id = 257  # flowset_id is reference to a template_id
         self.length = pack[1]
         self.flows = []
 
