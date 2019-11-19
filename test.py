@@ -353,6 +353,7 @@ class NetflowProtocol(asyncio.DatagramProtocol):
         version = unpack(data[0:2])
         records = []
         if version == 9:
+            print("shit")
             records = NetflowRecordV9.decode(data, addr)
         elif version == 5:
             records = NetflowRecordV5.decode(data, addr)
