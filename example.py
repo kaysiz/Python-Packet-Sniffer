@@ -3,7 +3,7 @@ import sys
 import binascii
 from struct import unpack, calcsize
 
-from netflow import parse_packet, TemplateNotRecognized, UnknownNetFlowVersion
+# from netflow import parse_packet, TemplateNotRecognized, UnknownNetFlowVersion
 
 class Flow(object):
 	# Virtual base class
