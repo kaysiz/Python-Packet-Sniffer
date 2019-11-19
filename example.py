@@ -19,7 +19,7 @@ while True:
     conn, addr = s.accept()
     packet = conn.recvfrom(65565)
     # print(packet)
-    print(packet[:2][0])
+    # print(packet[:2][0])
     #packet string from tuple
     packet = packet[0]
 
@@ -41,7 +41,7 @@ while True:
     s_addr = socket.inet_ntoa(iph[8]);
     d_addr = socket.inet_ntoa(iph[9]);
 
-    # print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
+    print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
 
     tcp_header = packet[iph_length:iph_length+20]
 
