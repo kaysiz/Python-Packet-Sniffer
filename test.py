@@ -120,7 +120,7 @@ socks = []
 	
 # 	socks.append(sock)
 
-	print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
+print("listening on [%s]:%d" % (addr[4][0], addr[4][1]))
 sock = socket.socket(addr[0], addr[1])
 sock.bind(addr[4])
 while True:
