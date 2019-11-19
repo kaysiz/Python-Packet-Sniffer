@@ -129,7 +129,7 @@ while True:
     conn, addr = s.accept()
     packet, data = conn.recvfrom(65565)
     if unpack("!H", packet[:2])[0] == 9:
-        return V9ExportPacket(data, templates)
+        print(V9ExportPacket(data, templates))
     print("blows up")
     # print(packet)
     # print(packet[:2][0])
