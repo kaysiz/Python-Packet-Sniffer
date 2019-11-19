@@ -13,8 +13,9 @@ Copyright 2017, 2018 Dominik Pataky <dev@bitkeks.eu>
 Licensed under MIT License. See LICENSE.
 """
 
-import struct
 import ipaddress
+import struct
+
 
 FIELD_TYPES = {
     0: 'UNKNOWN_FIELD_TYPE',  # fallback for unknown field types
@@ -325,22 +326,20 @@ class V9ExportPacket:
         offset = self.header.length
         while offset != len(data):
             flowset_id = struct.unpack('!H', data[offset:offset+2])[0]
-            
-            print(flowset_id)
-            # if flowset_id != 0:  # TemplateFlowSet always have id 0
-            tfs = TemplateFlowSet(data[offset:])
-            # Check for any new/changed templates
-            if not self._new_templates:
-                for id_, template in tfs.templates.items():
-                    if id_ not in self.templates or self.templates[id_] != template:
-                        self._new_templates = True
-                        break
-            self.templates.update(tfs.templates)
-            offset += tfs.length
-            # else:
-            #     dfs = DataFlowSet(data[offset:], self.templates)
-            #     self.flows += dfs.flows
-            #     offset += dfs.length
+            if flowset_id == 0:  # TemplateFlowSet always have id 0
+                tfs = TemplateFlowSet(data[offset:])
+                # Check for any new/changed templates
+                if not self._new_templates:
+                    for id_, template in tfs.templates.items():
+                        if id_ not in self.templates or self.templates[id_] != template:
+                            self._new_templates = True
+                            break
+                self.templates.update(tfs.templates)
+                offset += tfs.length
+            else:
+                dfs = DataFlowSet(data[offset:], self.templates)
+                self.flows += dfs.flows
+                offset += dfs.length
 
     @property
     def contains_new_templates(self):
