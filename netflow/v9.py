@@ -303,7 +303,6 @@ class Header:
     length = 20
 
     def __init__(self, data):
-        print(data)
         pack = struct.unpack('!HHIIII', data[:self.length])
 
         self.version = pack[0]
