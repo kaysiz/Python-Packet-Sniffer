@@ -314,7 +314,7 @@ class NetFlowPacket:
 
 
 class Rec(object):
-    def __init__(self, port="4002", host=None):
+    def __init__(self, port="2055", host=None):
         self.host = host
         # listening port
         self.port = port
