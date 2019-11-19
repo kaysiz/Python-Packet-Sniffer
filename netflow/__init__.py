@@ -4,7 +4,7 @@ import struct
 
 from netflow.v1 import V1ExportPacket
 from netflow.v5 import V5ExportPacket
-from netflow.v9 import V9ExportPacket, TemplateNotRecognized
+# from netflow.v9 import V9ExportPacket, TemplateNotRecognized
 
 __all__ = ["TemplateNotRecognized", "UnknownNetFlowVersion", "parse_packet"]
 
@@ -30,6 +30,6 @@ def parse_packet(data, templates):
         return V1ExportPacket(data)
     elif version == 5:
         return V5ExportPacket(data)
-    elif version == 9:
-        return V9ExportPacket(data, templates)
+    # elif version == 9:
+    #     return V9ExportPacket(data, templates)
     raise UnknownNetFlowVersion(data, version)
