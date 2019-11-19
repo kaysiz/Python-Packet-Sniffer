@@ -191,7 +191,7 @@ class DataFlowSet:
 
         if self.template_id not in templates.keys():
             raise TemplateNotRecognized
-
+        print("we passed this")
         template = templates[self.template_id]
 
         # As the field lengths are variable V9 has padding to next 32 Bit
