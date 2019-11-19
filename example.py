@@ -9,7 +9,7 @@ class Flow(object):
 	LENGTH = 0
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError, "Short flow"
+			raise ValueError("Short flow")
 
 	def _int_to_ipv4(self, addr):
 		return "%d.%d.%d.%d" % \
@@ -21,13 +21,13 @@ class Header(object):
 	LENGTH = 0
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError, "Short flow header"
+			raise ValueError("Short flow header")
 
 class Header1(Header):
 	LENGTH = struct.calcsize("!HHIII")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError, "Short flow header"
+			raise ValueError("Short flow header")
 			
 		_nh = struct.unpack("!HHIII", data)
 		self.version = _nh[0]
@@ -49,7 +49,7 @@ class Flow1(Flow):
 	LENGTH = struct.calcsize("!IIIHHIIIIHHHBBBBBBI")
 	def __init__(self, data):
 		if len(data) != self.LENGTH:
-			raise ValueError, "Short flow"
+			raise ValueError("Short flow")
 			
 		_ff = struct.unpack("!IIIHHIIIIHHHBBBBBBI", data)
 		self.src_addr = self._int_to_ipv4(_ff[0])
