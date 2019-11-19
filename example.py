@@ -120,7 +120,6 @@ def store_template_flowset(data):
     template_flowset_length = template_flowset_header[1]
     template_flowset_template_id = template_flowset_header[2]
     template_flowset_field_count = template_flowset_header[3]
-    print("meeeeeeeeeeeeeee " + str(template_flowset_template_id))
     template_fields_type_length = {}
     # iterate through all the template records in this template flowset
     offset = offset + 8
