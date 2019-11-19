@@ -274,20 +274,20 @@ class TemplateFlowSet:
             field_count = pack[1]
 
             fields = []
-            # for field in range(field_count):
-            #     # Get all fields of this template
-            #     offset += 4
-            #     field_type, field_length = struct.unpack('!HH', data[offset:offset+4])
-            #     if field_type not in FIELD_TYPES:
-            #         field_type = 0  # Set field_type to UNKNOWN_FIELD_TYPE as fallback
-            #     field = TemplateField(field_type, field_length)
-            #     fields.append(field)
+            for field in range(field_count):
+                # Get all fields of this template
+                offset += 4
+                field_type, field_length = struct.unpack('!HH', data[offset:offset+4])
+                if field_type not in FIELD_TYPES:
+                    field_type = 0  # Set field_type to UNKNOWN_FIELD_TYPE as fallback
+                field = TemplateField(field_type, field_length)
+                fields.append(field)
 
-            # # Create a template object with all collected data
-            # template = TemplateRecord(template_id, field_count, fields)
+            # Create a template object with all collected data
+            template = TemplateRecord(template_id, field_count, fields)
 
             # Append the new template to the global templates list
-            # self.templates[template.template_id] = template
+            self.templates[template.template_id] = template
 
             # Set offset to next template_id field
             offset += 4
@@ -325,7 +325,7 @@ class V9ExportPacket:
         offset = self.header.length
         while offset != len(data):
             flowset_id = struct.unpack('!H', data[offset:offset+2])[0]
-            print("heeeeey")
+            
             print(flowset_id)
             # if flowset_id != 0:  # TemplateFlowSet always have id 0
             tfs = TemplateFlowSet(data[offset:])

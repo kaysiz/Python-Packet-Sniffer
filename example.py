@@ -111,7 +111,25 @@ class NetFlowPacket:
 
 		return ret
 
-
+def store_template_flowset(data):
+    template_flowset_header = unpack('!HHHH', data[offset:offset+8])
+    template_flowset_id = template_flowset_header[0]
+    template_flowset_length = template_flowset_header[1]
+    template_flowset_template_id = template_flowset_header[2]
+    template_flowset_field_count = template_flowset_header[3]
+    
+    template_fields_type_length = {}
+    # iterate through all the template records in this template flowset
+    offset = offset + 8
+    i = 0
+    for template_redord in range(template_flowset_field_count):
+        # get all the fields in this template flowset
+        template_field_type, template_field_length = struct.unpack('!HH', data[offset:offset+4])
+        # create a dictionary for 
+        template_fields_type_length[(template_flowset_template_id, template_redord)] = (template_field_type, template_field_length)
+        offset += 4
+        i += 1
+    return template_fields_type_length, template_flowset_length, template_flowset_field_count, offset
 
 host = ''
 port = 2055
@@ -129,10 +147,12 @@ while True:
     conn, addr = s.accept()
     templates = {}
     packet, data = conn.recvfrom(65565)
+    print(store_template_flowset(packet))
     print(unpack("!H", packet[:2])[0])
-    if unpack("!H", packet[:2])[0] == 9:
-        print(V9ExportPacket(packet, templates))
-    print("blows up")
+    
+    # if unpack("!H", packet[:2])[0] == 9:
+    #     print(V9ExportPacket(packet, templates))
+    # print("blows up")
     # print(packet)
     # print(packet[:2][0])
     #packet string from tuple

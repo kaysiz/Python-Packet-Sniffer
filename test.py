@@ -158,20 +158,19 @@ def read_data_flowset(data):
 
 
 def get_length_field(data):
-    
 
-if flowset_id == 0:  # TemplateFlowSet always has an id = 0
-    template_flowset = TemplateFlowSet(data[20:])
-            self.templates.update(tfs.templates)
-            offset += tfs.length
-else:
-    data_flowset = 
+    if flowset_id == 0:  # TemplateFlowSet always has an id = 0
+        template_flowset = TemplateFlowSet(data[20:])
+                self.templates.update(tfs.templates)
+                offset += tfs.length
+    else:
+        data_flowset = ""
 
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((HOST, PORT))
-    print("Listening on interface {}:{}".format(HOST, PORT))
+print("Listening on interface {}:{}".format(HOST, PORT))
 
-    while True:
-        (data, sender) = sock.recvfrom(8192)
-        print("Received data from {}, length {}".format(sender, len(data)))
+while True:
+    (data, sender) = sock.recvfrom(8192)
+    print("Received data from {}, length {}".format(sender, len(data)))
