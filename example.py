@@ -186,7 +186,8 @@ while True:
     
     conn, addr = s.accept()
     packet, data = conn.recvfrom(65565)
-    NetFlowPacket(packet)
+    print(unpack("!H", packet[:2])[0])
+    # NetFlowPacket(packet)
     # print(packet)
     # print(packet[:2][0])
     #packet string from tuple
