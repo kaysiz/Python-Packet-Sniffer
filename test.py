@@ -10,7 +10,7 @@ import threading
 import struct
 import ipaddress
 import time
-import mysql.connector
+# import mysql.connector
 import os
 #from daemonize import Daemonize
 import logging
