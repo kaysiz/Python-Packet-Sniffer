@@ -324,7 +324,7 @@ class V9ExportPacket:
         self.flows = []
 
         offset = self.header.length
-        print("Offset    " + str(offset))
+        print("Offset    " + str(len(data)))
         while offset != len(data):
             flowset_id = struct.unpack('!H', data[offset:offset+2])[0]
             print("hellow there    " + str(flowset_id))
