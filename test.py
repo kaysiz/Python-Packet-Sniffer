@@ -126,9 +126,9 @@ for addr in addrs:
 while True:
     (rlist, wlist, xlist) = select.select(socks, [], socks)
     print("test")
-	for sock in rlist:
-		(data, addrport) = sock.recvfrom(8192)
-		print("Received flow packet from %s:%d" % addrport)
-		print(NetFlowPacket(data))
+    for sock in rlist:
+        (data, addrport) = sock.recvfrom(8192)
+        print("Received flow packet from %s:%d" % addrport)
+        print(NetFlowPacket(data))
 
 
