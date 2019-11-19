@@ -181,16 +181,13 @@ class DataFlowSet:
     def __init__(self, data, templates):
         pack = struct.unpack('!HH', data[:4])
         offset = 20
-        print("These are the templates:    " + str(templates.keys()))
+        print("These are the templates:    " + str(templates[257]))
         template_flowset_header = struct.unpack('!HHHH', data[offset:offset+8])
         self.template_id = template_flowset_header[2]  # flowset_id is reference to a template_id
         self.length = pack[1]
         self.flows = []
 
         offset = 4
-
-        if self.template_id not in templates.keys():
-            raise TemplateNotRecognized
 
         template = templates[self.template_id]
 
