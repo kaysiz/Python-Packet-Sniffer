@@ -337,6 +337,7 @@ class V9ExportPacket:
                             self._new_templates = True
                             break
                 self.templates.update(tfs.templates)
+                print("updated template: " + str(self.templates))
                 offset += tfs.length
             else:
                 dfs = DataFlowSet(data[offset:], self.templates)
