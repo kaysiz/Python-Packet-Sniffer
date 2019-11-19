@@ -181,13 +181,16 @@ class DataFlowSet:
     def __init__(self, data, templates):
         pack = struct.unpack('!HH', data[:4])
         offset = 20
-        print("These are the templates:    " + str(templates[257]))
+        print("These are the templates:    " + str(templates.keys()))
         template_flowset_header = struct.unpack('!HHHH', data[offset:offset+8])
         self.template_id = template_flowset_header[2]  # flowset_id is reference to a template_id
         self.length = pack[1]
         self.flows = []
 
         offset = 4
+
+        if self.template_id not in templates.keys():
+            raise TemplateNotRecognized
 
         template = templates[self.template_id]
 
@@ -203,6 +206,8 @@ class DataFlowSet:
 
                 # The length of the value byte slice is defined in the template
                 dataslice = data[offset:offset+flen]
+                
+                print("dats" + str(dataslice))
 
                 # Better solution than struct.unpack with variable field length
                 fdata = 0
