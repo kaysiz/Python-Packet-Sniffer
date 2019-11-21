@@ -155,14 +155,14 @@ while True:
     #     print(V9ExportPacket(packet, templates))
     
 	data = conn.recv(1518)
-	nfHeader = struct.unpack('!HHLLLL', data[0:20])
+	nfHeader = unpack('!HHLLLL', data[0:20])
 	for flow in range(0, nfHeader[1]):
 		if flow == 0:
-			firstFlow = struct.unpack('!IIIIIIIIBBHHBIBBBHH', data[24:74])
+			firstFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24:74])
 			print(firstFlow)
 		else:
 			offset = flow * templSize
-			subseqFlow = struct.unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
+			subseqFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
 			print(subseqFlow)
     # print("blows up")
     # print(packet)
