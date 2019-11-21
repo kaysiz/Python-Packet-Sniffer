@@ -168,7 +168,7 @@ while True:
 			offset = flow * templSize
 			subseqFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
 			print(subseqFlow)
-		print("Uptime is:  " + socket.ntohl(unpack('I',data[4:8])[0]))
+		print("Uptime is:  " + str(socket.ntohl(unpack('I',data[4:8])[0])))
     # print("blows up")
     # print(packet)
     # print(packet[:2][0])
