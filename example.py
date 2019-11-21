@@ -146,7 +146,7 @@ except socket.error as e:
 s.listen(5)
 while True:
     
-    # conn, addr = s.accept()
+    conn, addr = s.accept()
     # templates = {}
     # packet, data = conn.recvfrom(65565)
     # print(store_template_flowset(packet))
@@ -154,7 +154,7 @@ while True:
     # if unpack("!H", packet[:2])[0] == 9:
     #     print(V9ExportPacket(packet, templates))
     
-	data = s.recv(1518)
+	data = conn.recv(1518)
 	nfHeader = struct.unpack('!HHLLLL', data[0:20])
 	for flow in range(0, nfHeader[1]):
 		if flow == 0:
