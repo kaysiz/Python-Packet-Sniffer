@@ -167,7 +167,7 @@ while True:
 		else:
 			offset = flow * templSize
 			subseqFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
-			V9ExportPacket(subseqFlow[0], templates)
+			V9ExportPacket(data[24 + offset:74 + offset], templates)
 			print(subseqFlow)
     # print("blows up")
     # print(packet)
