@@ -215,7 +215,7 @@ class DataFlowSet:
                 if fkey in ["IPV4_SRC_ADDR", "IPV4_DST_ADDR", "IPV6_SRC_ADDR", "IPV6_DST_ADDR"]:
                     try:
                         ip = ipaddress.ip_address(fdata)
-                        print("This is an ip: " + ip)
+                        print("This is an ip: " + str(ip))
                     except ValueError:
                         print("IP address could not be parsed: {}".format(fdata))
                         continue
