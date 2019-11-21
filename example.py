@@ -146,13 +146,23 @@ except socket.error as e:
 s.listen(5)
 while True:
     
-    conn, addr = s.accept()
-    templates = {}
-    packet, data = conn.recvfrom(65565)
-    print(store_template_flowset(packet))
+    # conn, addr = s.accept()
+    # templates = {}
+    # packet, data = conn.recvfrom(65565)
+    # print(store_template_flowset(packet))
     
-    if unpack("!H", packet[:2])[0] == 9:
-        print(V9ExportPacket(packet, templates))
+    # if unpack("!H", packet[:2])[0] == 9:
+    #     print(V9ExportPacket(packet, templates))
+    data = s.recv(1518)
+	nfHeader = struct.unpack('!HHLLLL', data[0:20])
+	for flow in range(0, nfHeader[1]):
+		if flow == 0:
+			firstFlow = struct.unpack('!IIIIIIIIBBHHBIBBBHH', data[24:74])
+			print(firstFlow)
+		else:
+			offset = flow * templSize
+			subseqFlow = struct.unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
+			print(subseqFlow)
     # print("blows up")
     # print(packet)
     # print(packet[:2][0])
