@@ -194,7 +194,7 @@ class DataFlowSet:
         if (self.actual_template_id - 2) not in templates:
             raise TemplateNotRecognized
 
-        template = templates[self.template_id]
+        template = templates[self.actual_template_id]
 
         # As the field lengths are variable V9 has padding to next 32 Bit
         padding_size = 6 - (self.length % 6)  # 4 Byte
