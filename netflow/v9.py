@@ -180,17 +180,16 @@ class DataFlowSet:
     """
     def __init__(self, data, templates):
         pack = struct.unpack('!HH', data[:4])
-        offset = 20
-        print("These are the templates:    " + str(templates.keys()))
-        template_flowset_header = struct.unpack('!HHHH', data[offset:offset+8])
-        self.template_id = 257  # flowset_id is reference to a template_id
+
+        self.template_id = pack[0]  # flowset_id is reference to a template_id
         self.length = pack[1]
         self.flows = []
 
         offset = 4
 
-        if self.template_id not in templates.keys():
+        if self.template_id not in templates:
             raise TemplateNotRecognized
+
         template = templates[self.template_id]
 
         # As the field lengths are variable V9 has padding to next 32 Bit
@@ -205,7 +204,7 @@ class DataFlowSet:
 
                 # The length of the value byte slice is defined in the template
                 dataslice = data[offset:offset+flen]
-                
+
                 # Better solution than struct.unpack with variable field length
                 fdata = 0
                 for idx, byte in enumerate(reversed(bytearray(dataslice))):
@@ -227,8 +226,6 @@ class DataFlowSet:
             self.flows.append(new_record)
 
     def __repr__(self):
-        print("<DataFlowSet with template {} of length {} holding {} flows>"\
-            .format(self.template_id, self.length, len(self.flows)))
         return "<DataFlowSet with template {} of length {} holding {} flows>"\
             .format(self.template_id, self.length, len(self.flows))
 
@@ -334,13 +331,10 @@ class V9ExportPacket:
                 # Check for any new/changed templates
                 if not self._new_templates:
                     for id_, template in tfs.templates.items():
-                        print("we found an Id: " + str(template))
                         if id_ not in self.templates or self.templates[id_] != template:
-                            print("new template")
                             self._new_templates = True
                             break
                 self.templates.update(tfs.templates)
-                print("updated template: " + str(self.templates))
                 offset += tfs.length
             else:
                 dfs = DataFlowSet(data[offset:], self.templates)

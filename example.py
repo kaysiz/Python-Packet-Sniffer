@@ -144,6 +144,11 @@ except socket.error as e:
     print(str(e))
 templSize = 50
 s.listen(5)
+
+def get_netflow_version(data):
+    print("We are here")
+	print(unpack('!H', data[:2])[0])
+
 while True:
     
 	conn, addr = s.accept()
@@ -155,6 +160,7 @@ while True:
     #     print(V9ExportPacket(packet, templates))
     
 	data = conn.recv(1518)
+ 	get_netflow_version(data)
 	nfHeader = unpack('!HHLLLL', data[0:20])
 	version, count = unpack('!HH',data[0:4])
 	print("We have " + str(count) + " packets and Version is:  " + str(version))
