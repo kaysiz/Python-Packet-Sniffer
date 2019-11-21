@@ -94,29 +94,29 @@ def processPacket(data,addr):
         if flow_set_id > 255:
         # let us parse flow data
         # first check if template present
-        my_template = None
-        for template in templates:
-            if flow_set_id == template["id"] and addr[0] == template['address']: #check if template from same ip exist
-                my_template = template
-                break
-        if not my_template:
-            logging.debug("No suitable template found")
-        else:
-            nf_data=[]
-            template_total_data_length = my_template['data_length']
-            while len(my_data) >= template_total_data_length:
-                for field in my_template['description']:
-                    field_name = template_field[field['field_type']]['name']
-                    field_type = template_field[field['field_type']]['data_type']
-                    field_length = field['field_length']
-                    if field_length ==0:
-                        field_length = template_field[field['field_type']]['default']
-                    logging.debug("Data length = %d "%(field_length))
-                    ext_data = parse(my_data[:field_length],field_type,field_length)
-                    logging.debug ("%s : %s"%(field_name, ext_data))
-                    nf_data.append({field_name:ext_data})
-                    my_data = my_data[field_length:]
-            logging.info(nf_data)
+            my_template = None
+            for template in templates:
+                if flow_set_id == template["id"] and addr[0] == template['address']: #check if template from same ip exist
+                    my_template = template
+                    break
+            if not my_template:
+                logging.debug("No suitable template found")
+            else:
+                nf_data=[]
+                template_total_data_length = my_template['data_length']
+                while len(my_data) >= template_total_data_length:
+                    for field in my_template['description']:
+                        field_name = template_field[field['field_type']]['name']
+                        field_type = template_field[field['field_type']]['data_type']
+                        field_length = field['field_length']
+                        if field_length ==0:
+                            field_length = template_field[field['field_type']]['default']
+                        logging.debug("Data length = %d "%(field_length))
+                        ext_data = parse(my_data[:field_length],field_type,field_length)
+                        logging.debug ("%s : %s"%(field_name, ext_data))
+                        nf_data.append({field_name:ext_data})
+                        my_data = my_data[field_length:]
+                logging.info(nf_data)
 
 
 while True:
