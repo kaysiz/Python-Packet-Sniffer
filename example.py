@@ -142,7 +142,7 @@ try:
     s.bind((host, port))
 except socket.error as e:
     print(str(e))
-
+templSize = 50
 s.listen(5)
 while True:
     
