@@ -215,7 +215,6 @@ class DataFlowSet:
                 if fkey in ["IPV4_SRC_ADDR", "IPV4_DST_ADDR", "IPV6_SRC_ADDR", "IPV6_DST_ADDR"]:
                     try:
                         ip = ipaddress.ip_address(fdata)
-                        print("This is an ip: " + str(ip))
                     except ValueError:
                         print("IP address could not be parsed: {}".format(fdata))
                         continue
@@ -228,6 +227,8 @@ class DataFlowSet:
             self.flows.append(new_record)
 
     def __repr__(self):
+        print("<DataFlowSet with template {} of length {} holding {} flows>"\
+            .format(self.template_id, self.length, len(self.flows)))
         return "<DataFlowSet with template {} of length {} holding {} flows>"\
             .format(self.template_id, self.length, len(self.flows))
 
