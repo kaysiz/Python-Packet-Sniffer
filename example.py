@@ -157,7 +157,7 @@ while True:
 	data = conn.recv(1518)
 	nfHeader = unpack('!HHLLLL', data[0:20])
 	version, count = unpack('!HH',data[0:4])
-	print("We have " + count + " packets and Version is:  " + version)
+	print("We have " + str(count) + " packets and Version is:  " + str(version))
 	for flow in range(0, nfHeader[1]):
 		if flow == 0:
 			firstFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24:74])
