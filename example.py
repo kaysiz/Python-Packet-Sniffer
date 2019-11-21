@@ -159,7 +159,9 @@ while True:
 	for flow in range(0, nfHeader[1]):
 		if flow == 0:
 			firstFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24:74])
+			print("###################")
 			print(firstFlow)
+			print("###################")
 		else:
 			offset = flow * templSize
 			subseqFlow = unpack('!IIIIIIIIBBHHBIBBBHH', data[24 + offset:74 + offset])
