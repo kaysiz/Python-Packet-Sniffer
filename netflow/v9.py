@@ -326,6 +326,7 @@ class V9ExportPacket:
         self.flows = []
 
         offset = self.header.length
+        print("Length of header:  " + str(offset))
         while offset != len(data):
             flowset_id = struct.unpack('!H', data[offset:offset+2])[0]
             if flowset_id == 0:  # TemplateFlowSet always have id 0
