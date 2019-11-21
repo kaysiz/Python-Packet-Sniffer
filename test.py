@@ -9,7 +9,7 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind(('0.0.0.0', 2055))
 
 while True:
-	buf, addr = sock.recvfrom(1500)
+	buf, addr = sock.recv(1500)
 
 	(version, count) = struct.unpack('!HH',buf[0:4])
 	if version != 5:
