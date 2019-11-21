@@ -189,15 +189,15 @@ class DataFlowSet:
         
         self.flows = []
 
-        offset = 4
+        offset = 6
 
-        if self.template_id not in templates:
+        if (self.actual_template_id - 2) not in templates:
             raise TemplateNotRecognized
 
         template = templates[self.template_id]
 
         # As the field lengths are variable V9 has padding to next 32 Bit
-        padding_size = 4 - (self.length % 4)  # 4 Byte
+        padding_size = 6 - (self.length % 6)  # 4 Byte
 
         while offset <= (self.length - padding_size):
             new_record = DataRecord()
