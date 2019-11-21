@@ -153,6 +153,7 @@ while True:
     
     # if unpack("!H", packet[:2])[0] == 9:
     #     print(V9ExportPacket(packet, templates))
+    
     data = s.recv(1518)
 	nfHeader = struct.unpack('!HHLLLL', data[0:20])
 	for flow in range(0, nfHeader[1]):
