@@ -147,7 +147,7 @@ s.listen(5)
 while True:
     
 	conn, addr = s.accept()
-    # templates = {}
+	templates = {}
     # packet, data = conn.recvfrom(65565)
     # print(store_template_flowset(packet))
     
