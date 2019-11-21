@@ -273,7 +273,7 @@ class TemplateFlowSet:
 
         # Iterate through all template records in this template flowset
         while offset < self.length:
-            pack = struct.unpack('!HH', data[offset:offset+8])
+            pack = struct.unpack('!HH', data[offset:offset+4])
             template_id = pack[0]
             print("Template:    " + str(template_id))
             field_count = pack[1]
@@ -281,8 +281,8 @@ class TemplateFlowSet:
             fields = []
             for field in range(field_count):
                 # Get all fields of this template
-                offset += 8
-                field_type, field_length = struct.unpack('!HH', data[offset:offset+8])
+                offset += 4
+                field_type, field_length = struct.unpack('!HH', data[offset:offset+4])
                 if field_type not in FIELD_TYPES:
                     field_type = 0  # Set field_type to UNKNOWN_FIELD_TYPE as fallback
                 field = TemplateField(field_type, field_length)
@@ -295,7 +295,7 @@ class TemplateFlowSet:
             self.templates[template.template_id] = template
 
             # Set offset to next template_id field
-            offset += 8
+            offset += 4
 
     def __repr__(self):
         return "<TemplateFlowSet with id {} of length {} containing templates: {}>"\
