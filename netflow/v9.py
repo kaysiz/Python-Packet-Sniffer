@@ -274,7 +274,9 @@ class TemplateFlowSet:
 
         # Iterate through all template records in this template flowset
         while offset < self.length:
-            pack = struct.unpack('!HH', data[offset:offset+4])
+            pack = struct.unpack('!HHH', data[offset:offset+6])
+            for x in pack:
+                print("Template itel:    " + str(x))
             template_id = pack[0]
             print("Template:    " + str(template_id))
             field_count = pack[1]
