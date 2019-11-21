@@ -179,19 +179,20 @@ class DataFlowSet:
     DataFlowSet and must not be zero.
     """
     def __init__(self, data, templates):
-        pack = struct.unpack('!HH', data[:8])
-        for x in pack:
-            print("This is the pack: " + str(x))
+        pack = struct.unpack('!HHH', data[:4])
         print("Templates " + str(templates))
         self.template_id = pack[0] # flowset_id is reference to a template_id
         print("template Id: "+ str(self.template_id))
         self.length = pack[1]
+        self.actual_template_id = pack[2]
+        print("Actual template id:  " + str(self.actual_template_id))
+        
         self.flows = []
 
         offset = 4
 
-        # if self.template_id not in templates:
-        #     raise TemplateNotRecognized
+        if self.template_id not in templates:
+            raise TemplateNotRecognized
 
         template = templates[self.template_id]
 
