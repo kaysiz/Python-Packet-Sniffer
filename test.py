@@ -12,9 +12,9 @@ while True:
 	buf, addr = sock.recv(1500)
 
 	(version, count) = struct.unpack('!HH',buf[0:4])
-	if version != 5:
-		print "Not NetFlow v5!"
-		continue
+	# if version != 5:
+	# 	print "Not NetFlow v5!"
+	# 	continue
 
 	# It's pretty unlikely you'll ever see more then 1000 records in a 1500 byte UDP packet
 	if count <= 0 or count >= 1000:
