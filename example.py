@@ -146,8 +146,9 @@ templSize = 50
 s.listen(5)
 
 def get_netflow_version(data):
-    print("We are here")
+	print("We are here")
 	print(unpack('!H', data[:2])[0])
+
 
 while True:
     
