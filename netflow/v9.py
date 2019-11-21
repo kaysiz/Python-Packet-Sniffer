@@ -190,8 +190,8 @@ class DataFlowSet:
 
         offset = 4
 
-        if self.template_id not in templates:
-            raise TemplateNotRecognized
+        # if self.template_id not in templates:
+        #     raise TemplateNotRecognized
 
         template = templates[self.template_id]
 
