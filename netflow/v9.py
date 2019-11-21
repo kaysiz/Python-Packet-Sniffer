@@ -273,6 +273,7 @@ class TemplateFlowSet:
         while offset < self.length:
             pack = struct.unpack('!HH', data[offset:offset+4])
             template_id = pack[0]
+            print("Template:    " + str(template_id))
             field_count = pack[1]
 
             fields = []
