@@ -285,7 +285,7 @@ class TemplateFlowSet:
             for field in range(field_count):
                 # Get all fields of this template
                 offset += 6
-                field_type, field_length = struct.unpack('!HH', data[offset:offset+6])
+                field_type, field_length = struct.unpack('!HHH', data[offset:offset+6])
                 if field_type not in FIELD_TYPES:
                     field_type = 0  # Set field_type to UNKNOWN_FIELD_TYPE as fallback
                 field = TemplateField(field_type, field_length)
