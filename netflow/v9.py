@@ -191,7 +191,6 @@ class DataFlowSet:
 
         if self.template_id not in templates.keys():
             raise TemplateNotRecognized
-        print("we passed this")
         template = templates[self.template_id]
 
         # As the field lengths are variable V9 has padding to next 32 Bit
@@ -201,15 +200,12 @@ class DataFlowSet:
             new_record = DataRecord()
 
             for field in template.fields:
-                print(str(field))
                 flen = field.field_length
                 fkey = FIELD_TYPES[field.field_type]
 
                 # The length of the value byte slice is defined in the template
                 dataslice = data[offset:offset+flen]
                 
-                print("dats" + str(dataslice))
-
                 # Better solution than struct.unpack with variable field length
                 fdata = 0
                 for idx, byte in enumerate(reversed(bytearray(dataslice))):

@@ -117,7 +117,6 @@ def store_template_flowset(data):
     
     template_flowset_header = unpack('!HHHH', data[offset:offset+8])
     template_flowset_id = template_flowset_header[0]
-    print("Flowset id   " + str(template_flowset_id))
     template_flowset_length = template_flowset_header[1]
     template_flowset_template_id = template_flowset_header[2]
     template_flowset_field_count = template_flowset_header[3]
@@ -151,7 +150,6 @@ while True:
     templates = {}
     packet, data = conn.recvfrom(65565)
     print(store_template_flowset(packet))
-    print(unpack("!H", packet[:2])[0])
     
     if unpack("!H", packet[:2])[0] == 9:
         print(V9ExportPacket(packet, templates))
