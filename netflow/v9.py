@@ -179,7 +179,7 @@ class DataFlowSet:
     DataFlowSet and must not be zero.
     """
     def __init__(self, data, templates):
-        pack = struct.unpack('!HH', data[:4])
+        pack = struct.unpack('!HH', data[:8])
         for x in pack:
             print("This is the pack: " + str(x))
         print("Templates " + str(templates))
