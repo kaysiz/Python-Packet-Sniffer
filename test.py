@@ -6,7 +6,7 @@ SIZE_OF_HEADER = 24
 SIZE_OF_RECORD = 48
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(('0.0.0.0', 2303))
+sock.bind(('0.0.0.0', 2055))
 
 while True:
 	buf, addr = sock.recvfrom(1500)
