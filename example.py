@@ -161,7 +161,7 @@ while True:
     #     print(V9ExportPacket(packet, templates))
     
 	# data = conn.recv(1518)
-	data, addr = sock.recvfrom(1500)
+	data, addr = s.recvfrom(1500)
 
 	(version, count) = unpack('!HH',buf[0:4])
 	# get_netflow_version(data)
