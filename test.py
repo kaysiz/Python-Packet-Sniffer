@@ -1,7 +1,5 @@
 import socket, struct
 
-from socket import inet_ntoa
-
 SIZE_OF_HEADER = 24
 SIZE_OF_RECORD = 48
 
