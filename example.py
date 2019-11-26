@@ -165,6 +165,7 @@ while True:
 	# nfHeader = unpack('!HHLLLL', packet[0:20])
 	version, count = unpack('!HH',packet[0:4])
 	print("We have " + str(count) + " packets and Version is:  " + str(version))
+	print(str(addr))
 	# V9ExportPacket(data, templates)
 	# for flow in range(0, nfHeader[1]):
 	# 	if flow == 0:
