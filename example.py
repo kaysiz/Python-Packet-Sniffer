@@ -163,7 +163,7 @@ while True:
 	data = conn.recv(1518)
 	# get_netflow_version(data)
 	# nfHeader = unpack('!HHLLLL', data[0:20])
-	version, count = unpack('!HHHH',data[0:8])
+	version, count, x = unpack('!HHHH',data[0:8])
 	print("We have " + str(count) + " packets and Version is:  " + str(version))
 	# V9ExportPacket(data, templates)
 	# for flow in range(0, nfHeader[1]):
