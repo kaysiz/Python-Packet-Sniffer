@@ -160,7 +160,7 @@ while True:
     # if unpack("!H", packet[:2])[0] == 9:
     #     print(V9ExportPacket(packet, templates))
     
-	data = conn.recv(1518)
+	data = conn.recv(1500)
 	# get_netflow_version(data)
 	nfHeader = unpack('!HHLLLL', data[0:20])
 	version, count = unpack('!HH',data[0:4])
