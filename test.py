@@ -13,12 +13,12 @@ while True:
 
 	(version, count) = struct.unpack('!HH',buf[0:4])
 	if version != 5:
-		print "Not NetFlow v5!"
+		print ("Not NetFlow v5!")
 		continue
 
 	# It's pretty unlikely you'll ever see more then 1000 records in a 1500 byte UDP packet
 	if count <= 0 or count >= 1000:
-		print "Invalid count %s" % count
+		print ("Invalid count %s" % count)
 		continue
 
 	uptime = socket.ntohl(struct.unpack('I',buf[4:8])[0])
@@ -44,4 +44,4 @@ while True:
 			continue
 
 	# Do something with the netflow record..
-	print "%s:%s -> %s:%s" % (nfdata['saddr'],nfdata['sport'],nfdata['daddr'],nfdata['dport'])
+	print ("%s:%s -> %s:%s" % (nfdata['saddr'],nfdata['sport'],nfdata['daddr'],nfdata['dport']))
