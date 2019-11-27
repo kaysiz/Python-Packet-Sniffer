@@ -1,7 +1,7 @@
 import socket, sys
 from struct import unpack
 try:
-	s = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_TCP)
+	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	s.bind(('127.0.0.1', 2055))
 except socket.error as msg:
 	print('Socket could not be created. Error code: '+ str(msg[0]) + 'Message ' + msg[1])
