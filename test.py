@@ -9,7 +9,7 @@ except socket.error as msg:
 
 while True:
 	# packet = s.recvfrom(65565)
-	packet, data = conn.recvfrom(65565)
+	packet, data = s.recvfrom(65565)
 	version, count = unpack('!HH',packet[0:4])
 	print("We have " + str(count) + " packets and Version is:  " + str(version))
 
