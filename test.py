@@ -1,15 +1,13 @@
-import socket, struct
+import socket
+from struct import unpack
 
-from socket import inet_ntoa
+HOST = '127.0.0.1'  # The server's hostname or IP address
+PORT = 2055       # The port used by the server
 
-SIZE_OF_HEADER = 24
-SIZE_OF_RECORD = 48
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.bind(('127.0.0.1', 2055))
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 while True:
-	buf, addr = sock.recvfrom(1500)
-
-	(version, count) = struct.unpack('!HH',buf[0:4])
-	print(str(version))
+	s.connect((HOST, PORT))
+	data = s.recv(1024)
+	version, count = unpack('!HH',data[0:4])
+	print("We have " + str(count) + " packets and Version is:  " + str(version))
