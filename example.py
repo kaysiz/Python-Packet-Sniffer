@@ -143,7 +143,7 @@ try:
 except socket.error as e:
     print(str(e))
 templSize = 50
-# s.listen(5)
+s.listen(5)
 
 def get_netflow_version(data):
 	print(data)
