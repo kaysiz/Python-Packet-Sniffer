@@ -1,61 +1,47 @@
-import socket, sys
-from struct import unpack
-try:
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	s.bind(('127.0.0.1', 2055))
-except socket.error as msg:
-	print('Socket could not be created. Error code: '+ str(msg[0]) + 'Message ' + msg[1])
-	sys.exit()
+import socket, struct
+
+from socket import inet_ntoa
+
+SIZE_OF_HEADER = 24
+SIZE_OF_RECORD = 48
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(('127.0.0.1', 2055))
 
 while True:
-	# packet = s.recv(65565)
-	packet, data = s.recv(65565)
-	version, count = unpack('!HH',packet[0:4])
-	print("We have " + str(count) + " packets and Version is:  " + str(version))
+	buf, addr = sock.recvfrom(1500)
 
-	# #packet string from tuple
-	# packet = packet[0]
+	(version, count) = struct.unpack('!HH',buf[0:4])
+	if version != 5:
+		print "Not NetFlow v5!"
+		continue
 
-	# # take the first 20 characters of the ip header
-	# ip_header = packet[0:20]
+	# It's pretty unlikely you'll ever see more then 1000 records in a 1500 byte UDP packet
+	if count <= 0 or count >= 1000:
+		print "Invalid count %s" % count
+		continue
 
-	# # now upack them
-	# iph = unpack('!BBHHHBBH4s4s', ip_header)
+	uptime = socket.ntohl(struct.unpack('I',buf[4:8])[0])
+	epochseconds = socket.ntohl(struct.unpack('I',buf[8:12])[0])
 
-	# version_ihl = iph[0]
-	# version = version_ihl >> 4
-	# ihl = version_ihl &  0xF
+	for i in range(0, count):
+		try:
+			base = SIZE_OF_HEADER+(i*SIZE_OF_RECORD)
 
-	# iph_length = ihl * 4
+			data = struct.unpack('!IIIIHH',buf[base+16:base+36])
 
-	# ttl = iph[5]
-	# protocol = iph[6]
-	# s_addr = socket.inet_ntoa(iph[8]);
-	# d_addr = socket.inet_ntoa(iph[9]);
+			nfdata = {}
+			nfdata['saddr'] = inet_ntoa(buf[base+0:base+4])
+			nfdata['daddr'] = inet_ntoa(buf[base+4:base+8])
+			nfdata['pcount'] = data[0]
+			nfdata['bcount'] = data[1]
+			nfdata['stime'] = data[2]
+			nfdata['etime'] = data[3]
+			nfdata['sport'] = data[4]
+			nfdata['dport'] = data[5]
+			nfdata['protocol'] = ord(buf[base+38])
+		except:
+			continue
 
-	# #print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
-
-	# tcp_header = packet[iph_length:iph_length+20]
-
-	# #now unpack them :)
-	# tcph = unpack('!HHLLBBHHH' , tcp_header)
-
-	# source_port = tcph[0]
-	# dest_port = tcph[1]
-	# sequence = tcph[2]
-	# acknowledgement = tcph[3]
-	# doff_reserved = tcph[4]
-	# tcph_length = doff_reserved >> 4
-
-	# if dest_port == 2055:
-	# 	print('Version : ' + str(version) + ' IP Header Length : ' + str(ihl) + ' TTL : ' + str(ttl) + ' Protocol : ' + str(protocol) + ' Source Address : ' + str(s_addr) + ' Destination Address : ' + str(d_addr))
-	# 	print('Source Port : ' + str(source_port) + ' Dest Port : ' + str(dest_port) + ' Sequence Number : ' + str(sequence) + ' Acknowledgement : ' + str(acknowledgement) + ' TCP header length : ' + str(tcph_length))
-
-	# 	h_size = iph_length + tcph_length * 4
-	# 	data_size = len(packet) - h_size
-
-	# 	#get data from the packet
-	# 	data = packet[h_size:]
-
-	# 	#sys.stdout.buffer.write(data)
-	# 	print('Data : ' + str(data))
+	# Do something with the netflow record..
+	print "%s:%s -> %s:%s" % (nfdata['saddr'],nfdata['sport'],nfdata['daddr'],nfdata['dport'])
