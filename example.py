@@ -156,6 +156,7 @@ while True:
 	conn, addr = s.accept()
 	templates = {}
 	packet, data = conn.recvfrom(65565)
+    print(data)
     # print(store_template_flowset(packet))
     
     # if unpack("!H", packet[:2])[0] == 9:
