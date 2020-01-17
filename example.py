@@ -154,17 +154,17 @@ def get_netflow_version(data):
 while True:
     # print("test")
 	conn, addr = s.accept()
-	templates = {}
-	packet, data = conn.recvfrom(65565)
-	print(packet)
-	print(data)
+	# templates = {}
+	# packet, data = conn.recvfrom(65565)
+	# print(packet)
+	# print(data)
     # print(store_template_flowset(packet))
     
     # if unpack("!H", packet[:2])[0] == 9:
     #     print(V9ExportPacket(packet, templates))
     
-	# data = s.recv(1518)
-	# get_netflow_version(data)
+	data = s.recv(1518)
+	get_netflow_version(data)
 	# nfHeader = unpack('!HHLLLL', data[0:20])
 	version, count = unpack('!HH',packet[0:4])
 	print("We have " + str(count) + " packets and Version is:  " + str(version))
