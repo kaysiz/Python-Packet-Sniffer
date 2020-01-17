@@ -134,7 +134,7 @@ def store_template_flowset(data):
     return template_fields_type_length, template_flowset_length, template_flowset_field_count, offset
 
 host = '127.0.0.1'
-port = 2055
+port = 1234
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -154,20 +154,18 @@ def get_netflow_version(data):
 while True:
     # print("test")
 	conn, addr = s.accept()
-	# templates = {}
+	templates = {}
 	packet, data = conn.recvfrom(65565)
-	# print(packet)
-	# print(data)
     # print(store_template_flowset(packet))
     
     # if unpack("!H", packet[:2])[0] == 9:
     #     print(V9ExportPacket(packet, templates))
     
 	# data = s.recv(1518)
-	get_netflow_version(packet)
+	# get_netflow_version(data)
 	# nfHeader = unpack('!HHLLLL', data[0:20])
-	# version, count = unpack('!HH',packet[0:4])
-	# print("We have " + str(count) + " packets and Version is:  " + str(version))
+	version, count = unpack('!HH',packet[0:4])
+	print("We have " + str(count) + " packets and Version is:  " + str(version))
 	# V9ExportPacket(data, templates)
 	# for flow in range(0, nfHeader[1]):
 	# 	if flow == 0:
