@@ -152,7 +152,7 @@ def get_netflow_version(data):
 
 
 while True:
-    
+    print("test")
 	conn, addr = s.accept()
 	templates = {}
 	packet, data = conn.recvfrom(65565)
